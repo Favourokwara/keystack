@@ -12,6 +12,20 @@ export default class SentenceComparator {
     }
 
     /**
+     * Returns the reference words that we're comparing the typed sentence to.
+     */
+    public getReferSentence(): string[] {
+        return this.reference;
+    }
+
+    /**
+     * Returns sentence being compared to the initial reference sentence.
+     */
+    public getTypedSentence(): string[] {
+        return this.typedSentence;
+    }
+
+    /**
      * Adds character to the typed sentence and updates the cursor position.
      * @param char Character to be added.
      * @returns True if character was successfully added, false otherwise.
