@@ -1,30 +1,32 @@
-import SentenceComparator from '@/model/SentenceComparator';
-import { useEffect, useRef, useState } from 'react'
+import SentenceComparator from "@/model/SentenceComparator"
+import { useEffect, useRef, useState } from "react"
 
-const useSentenceComparator = (refSentence: string[]) => {
-    const comparator = useRef<SentenceComparator>(new SentenceComparator(refSentence));
+const useSentenceComparator = (reference: string[]) => {
+    const comparator = useRef<SentenceComparator>(new SentenceComparator(reference));
 
-    const [expected, setExpected] = useState(comparator.current.getReferSentence());
+    const [expected, setExpected] = useState(comparator.current.getReferenceSentence());
     const [actually, setActually] = useState(comparator.current.getTypedSentence());
 
-    function handleKeydown(event: KeyboardEvent) {
+    const handleKeydown = (event: KeyboardEvent) => {
         if (event.key.length === 1) {
             // single alpha-numeric keycap pressed
             comparator.current.add(event.key);
             setActually(comparator.current.getTypedSentence());
-            console.log(actually);
-            
-        } else if (event.key.toLowerCase() === "backspace") {
+        } else if (event.key === "Backspace") {
             comparator.current.remove(event.ctrlKey);
             setActually(comparator.current.getTypedSentence());
         }
     }
 
-    useEffect(() => {
-        window.addEventListener("keydown", handleKeydown);
-    }, [])
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleKeydown);
 
-    return { expected, actually };
-}
+    //     return () => {
+    //         document.removeEventListener("keydown", handleKeydown);
+    //     };
+    // }, []);
+
+    return { expected, actually, handleKeydown };
+};
 
 export default useSentenceComparator;

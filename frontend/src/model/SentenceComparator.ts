@@ -12,17 +12,17 @@ export default class SentenceComparator {
     }
 
     /**
-     * Returns the reference words that we're comparing the typed sentence to.
-     */
-    public getReferSentence(): string[] {
-        return this.reference;
-    }
-
-    /**
-     * Returns sentence being compared to the initial reference sentence.
+     @returns Sentence being compared to the provided reference.
      */
     public getTypedSentence(): string[] {
         return this.typedSentence;
+    }
+
+    /**
+     * @returns Sentence used as a reference to the expected value.
+     */
+    public getReferenceSentence() {
+        return this.reference;
     }
 
     /**
