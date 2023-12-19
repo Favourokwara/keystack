@@ -25,3 +25,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.wordList {
+  color: #a1a1a1;
+}
+
+.correct {
+  color: #ededed;
+}
+
+.incorrect {
+  color: #ff7070;
+}
