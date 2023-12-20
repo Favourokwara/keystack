@@ -26,14 +26,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.wordList {
-  color: #a1a1a1;
-}
+@layer components {
+  #words {
+    @apply inline-flex text-xl;
+  }
+  
+  .word {
+    @apply inline-flex p-0.5 text-gray-400 ;
+  }
 
-.correct {
-  color: #ededed;
-}
-
-.incorrect {
-  color: #ff7070;
+  .correct {
+    @apply text-gray-100;
+  }
 }

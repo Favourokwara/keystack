@@ -1,37 +1,36 @@
 import React, { forwardRef } from 'react'
 
 const Word = forwardRef<HTMLDivElement, { expected: string, actually: string }>(({ expected, actually }, focusRef) => {
-    const isFocus = focusRef != null;
-    const hasExtra = expected.length < actually.length;
+    const wordclass = ["word"];
+    const isFocus = focusRef !== null;  // check if word is the focus
+    const isOmitted = actually.length >= expected.length;
 
-    const word = ["word"];
-
-    if (actually != "" && !isFocus && actually != actually) {
-        word.push("error");
+    if (actually.length > 0 && !isFocus && actually !== expected ) {
+        wordclass.push("error");
     }
 
-    if (hasExtra) {
-        word.push("extra");
+    if (expected.length < actually.length) {
+        wordclass.push("extra");
     }
-    
 
     return (
-        <span className={word.join(" ")} ref={isFocus && hasExtra? focusRef : null}>
-            {((!hasExtra)? expected : actually).split("").map((_, index) => {
+        <div className={wordclass.join(" ")} ref={isOmitted ? focusRef : null}>
+            {(isOmitted ? actually : expected).split("").map((_, index) => {
+                const letterclass = ["letter"]
                 const isExtra = expected[index] === undefined;
 
-                const letter = ["letter"];
-
-                if (actually[index] != undefined) {
-                    letter.push((actually[index] === expected[index])
-                                          ? "correct" : "incorrect");
+                if (actually[index] !== undefined) {
+                    letterclass.push(expected[index] === actually[index] ?
+                                                 "correct" : "incorrect");
                 }
 
-                return (<span key={index} className={letter.join(" ")} ref={isFocus && !hasExtra && index === actually.length? focusRef : null} >
-                    {isExtra? actually[index] : expected[index]}
-                </span>);
+                return (
+                    <div key={index} className={letterclass.join(" ")} ref={!isOmitted && index === actually.length ? focusRef : null}>
+                        { isExtra? expected[index] : actually[index] }
+                    </div>
+                );
             })}
-        </span>
+        </div>
     )
 });
 
