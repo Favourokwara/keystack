@@ -1,10 +1,7 @@
-"use client"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useRef, useState } from 'react'
 import Words from './Words';
-import useDictionaryComparator from '@/hooks/useDictionaryComparator';
 
-const WordsWrapper = () => {
-    const [expected, actually] = useDictionaryComparator();
+const WordsWrapper = ({expected, actually, handleFocus, isFocus = true}: {expected: string[], actually: string[], handleFocus: MouseEventHandler<HTMLDivElement>, isFocus?: boolean }) => {
 
     const cursorRef = useRef<HTMLDivElement>(null);
 
@@ -38,13 +35,11 @@ const WordsWrapper = () => {
         }
     }, [])
 
-    
     return (
         <>
-            <div id="wordsWrapper">
-                {cursorRef.current && 
-                    <div id="caret" style={{transform: `translateX(${x}px)`}} />}
-                <Words reference={expected} expected={actually} ref={cursorRef} />
+            <div id="wordsWrapper" onClick={handleFocus} >
+                {isFocus && <div id="caret" style={{transform: `translateX(${x}px)`}} />}
+                <Words reference={expected} expected={actually} ref={cursorRef} blurred={!isFocus} />
             </div>
         </>
     )

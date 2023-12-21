@@ -8,8 +8,7 @@ const Word = forwardRef<HTMLDivElement, { expected: string, actually: string }>(
     if (actually.length > 0 && !isFocus && actually !== expected ) {
         wordclass.push("error");
     }
-    // console.log(isFocus);
-    
+
     if (isFocus) {
         wordclass.push("active");
     }

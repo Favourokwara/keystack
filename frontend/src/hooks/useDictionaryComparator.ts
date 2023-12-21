@@ -1,5 +1,5 @@
 import DictionaryComparator from '@/model/DictionaryComparator'
-import { useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 const useDictionaryComparator = () => {
     const reference = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"];
@@ -8,7 +8,8 @@ const useDictionaryComparator = () => {
     const [expected, setExpected] = useState(comparatorRef.current.getReferenceSentence());
     const [actually, setActually] = useState(comparatorRef.current.getTypedSentence());
 
-    const handleKeydown = async (event: KeyboardEvent) => {
+    const handleKeydown = async (event: KeyboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
         if (event.key.length === 1) {
             comparatorRef.current.append(event.key);
             setActually(comparatorRef.current.getTypedSentence());
@@ -18,15 +19,7 @@ const useDictionaryComparator = () => {
         }
     }
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeydown);
-        return () => {
-            document
-                .addEventListener("keydown", handleKeydown);
-        }
-    }, [])
-
-    return [expected, actually];
+    return {expected, actually, handleKeydown};
 }
 
 export default useDictionaryComparator;
