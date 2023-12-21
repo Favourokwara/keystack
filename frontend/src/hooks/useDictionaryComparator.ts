@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const useDictionaryComparator = () => {
     const reference = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"];
-    const comparatorRef = useRef<DictionaryComparator>(new DictionaryComparator(reference));
+    const comparatorRef = useRef<DictionaryComparator>(new DictionaryComparator(reference, 10));
 
     const [expected, setExpected] = useState(comparatorRef.current.getReferenceSentence());
     const [actually, setActually] = useState(comparatorRef.current.getTypedSentence());

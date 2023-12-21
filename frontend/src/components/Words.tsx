@@ -6,7 +6,7 @@ const Words = forwardRef<HTMLDivElement, { reference: string[], expected: string
         <div id="words">
             {reference.map((word, index) => {
                 return (
-                    <Word key={index} actually={word || ""} expected={reference[index]} ref={index === expected.length - 1 ? focusRef : null} />
+                    <Word key={index} actually={expected[index] || ""} expected={reference[index]} ref={index === expected.length - 1 ? focusRef : null} />
                 );
             })}
         </div>

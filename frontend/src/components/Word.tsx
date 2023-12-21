@@ -8,9 +8,10 @@ const Word = forwardRef<HTMLDivElement, { expected: string, actually: string }>(
     if (actually.length > 0 && !isFocus && actually !== expected ) {
         wordclass.push("error");
     }
-
-    if (expected.length < actually.length) {
-        wordclass.push("extra");
+    // console.log(isFocus);
+    
+    if (isFocus) {
+        wordclass.push("active");
     }
 
     return (
@@ -26,7 +27,7 @@ const Word = forwardRef<HTMLDivElement, { expected: string, actually: string }>(
 
                 return (
                     <div key={index} className={letterclass.join(" ")} ref={!isOmitted && index === actually.length ? focusRef : null}>
-                        { isExtra? expected[index] : actually[index] }
+                        { isExtra? actually[index] : expected[index] }
                     </div>
                 );
             })}

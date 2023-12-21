@@ -30,6 +30,11 @@ export default class DictionaryComparator {
             return true;
         } else if (this.canAddCharacter() && char !== " ") {
             this.comparand[this.focusIndex] += char;
+
+            if (this.isAtLastWord() && this.reference[this.focusIndex]
+                === this.comparand[this.focusIndex]) {
+                this.moveToNextWord();  // last word successfully typed
+            }
             return true;
         }
 
@@ -114,6 +119,10 @@ export default class DictionaryComparator {
 
     private getFocusedWord(): string {
         return this.comparand[this.focusIndex];
+    }
+
+    private isAtLastWord(): boolean {
+        return this.focusIndex === this.reference.length - 1;
     }
 
     private moveToNextWord(): void {

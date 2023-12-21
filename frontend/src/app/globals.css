@@ -30,12 +30,30 @@ body {
   #words {
     @apply inline-flex text-xl;
   }
-  
+
   .word {
-    @apply inline-flex p-0.5 text-gray-400 ;
+    @apply inline-flex m-1 text-gray-400 border-b-2;
   }
 
   .correct {
     @apply text-gray-100;
+  }
+
+  .incorrect {
+    @apply text-red-500;
+  }
+
+  #wordsWrapper {
+    @apply relative;
+  }
+
+  #caret {
+    @apply absolute h-7 w-0.5 bg-red-600 top-1;
+    animation: blink 1.5s linear 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% {opacity: 1;}
+    50% {opacity: 0;}
   }
 }
