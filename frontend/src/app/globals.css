@@ -43,7 +43,7 @@ body {
   }
 
   .blurred {
-    @apply blur-sm opacity-25;
+    @apply blur-sm opacity-25 transition-all delay-1000;
   }
 
   .incorrect {
