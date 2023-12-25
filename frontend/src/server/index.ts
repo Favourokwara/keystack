@@ -1,23 +1,18 @@
+import { getWordsList } from 'most-common-words-by-language';
 import { publicProcedure, router } from './trpc';
-import { getWordsList } from "most-common-words-by-language";
-import { z } from "zod";
+import { z } from 'zod';
 
 export const appRouter = router({
-    sayHello: publicProcedure
-    .meta({ /* 👉 */ openapi: { method: 'GET', path: '/say-hello' } })
-    .input(z.object({ name: z.string() }))
-    .output(z.object({ greeting: z.string() }))
-    .query(({ input }) => {
-      return { greeting: `Hello ${input.name}!` };
-    }),
-    // words: publicProcedure
-    //     .input(z.string())
-    //     .query(async (opts) => {
-    //         const { input } = opts;
-    //         return getWordsList("english", 200);
-    //     })
+  getTodos: publicProcedure
+  .query(async () => {
+    return [10, 20, 30];
+  }),
+  getWords: publicProcedure
+  .input(z.object({ language: z.string(), limit: z.number().optional()}))  
+  .query(async (opt) => {
+      const { language, limit = 300 } = opt.input;
+      return getWordsList( language, limit );
+    }) 
 });
 
-// Export type router type signature,
-// NOT the router itself.
 export type AppRouter = typeof appRouter;

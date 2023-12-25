@@ -1,5 +1,6 @@
+import { trpc } from '@/app/api/trpc/[trpc]/_trpc/client';
 import DictionaryComparator from '@/model/DictionaryComparator'
-import { KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, useRef, useState } from 'react'
 
 const useDictionaryComparator = () => {
     const reference = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"];
