@@ -2,9 +2,14 @@
 import useDictionaryComparator from '@/hooks/useDictionaryComparator';
 import React, { useEffect, useRef, useState } from 'react'
 import WordsWrapper from './WordsWrapper';
+import { trpc } from '@/app/api/trpc/[trpc]/_trpc/client';
 
 const TypingTest = () => {
-    const {expected, actually, handleKeydown} = useDictionaryComparator();
+    
+
+    const { expected, actually, handleKeydown, handleReload } = useDictionaryComparator();
+
+    // Todo: Use custom hook for input
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,7 +27,8 @@ const TypingTest = () => {
     return (
         <div id="typingTest">
             <input id="wordsInput" type="text" onFocus={onFocus} onBlur={onBlur} onKeyDown={handleKeydown} ref={inputRef} />
-            <WordsWrapper expected={expected} actually={actually} isFocus={isFocused} handleFocus={handleFocus} />
+            <WordsWrapper expected={expected ??[]} actually={actually??[]} isFocus={isFocused} handleFocus={handleFocus} />
+            <button type="button" className='p-4' onClick={handleReload} ></button>
         </div>
     )
 }

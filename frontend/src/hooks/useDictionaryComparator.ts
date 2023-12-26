@@ -1,26 +1,51 @@
-import { trpc } from '@/app/api/trpc/[trpc]/_trpc/client';
-import DictionaryComparator from '@/model/DictionaryComparator'
-import { KeyboardEvent, useRef, useState } from 'react'
+import { trpc } from "@/app/api/trpc/[trpc]/_trpc/client";
+import DictionaryComparator from "@/model/DictionaryComparator";
+import { sampleSize } from "lodash";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
-const useDictionaryComparator = () => {
-    const reference = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"];
-    const comparatorRef = useRef<DictionaryComparator>(new DictionaryComparator(reference, 10));
+export default function useDictionaryComparator() {
 
-    const [expected, setExpected] = useState(comparatorRef.current.getReferenceSentence());
-    const [actually, setActually] = useState(comparatorRef.current.getTypedSentence());
+    const [words, setWords] = useState<string[]>();
+    const comparatorRef = useRef<DictionaryComparator>();
+
+    const [expected, setExpected] = useState(comparatorRef.current?.getReferenceSentence());
+    const [actually, setActually] = useState(comparatorRef.current?.getTypedSentence());
+
+    const { data, isLoading, error, refetch } = trpc.getWords.useQuery(
+        { language: 'english' },
+        {
+            refetchInterval: false,
+            refetchOnReconnect: false,
+            refetchOnWindowFocus: false,
+            onSuccess: wordsList => {
+                setWords(sampleSize(wordsList, 300));
+            }
+        }
+    );
 
     const handleKeydown = async (event: KeyboardEvent<HTMLInputElement>) => {
-        event.preventDefault();
+        event.preventDefault();  // prevent character input
+
         if (event.key.length === 1) {
-            comparatorRef.current.append(event.key);
-            setActually(comparatorRef.current.getTypedSentence());
+            comparatorRef.current?.append(event.key);
+            setActually(comparatorRef.current?.getTypedSentence());
         } else if (event.key.toLowerCase() === "backspace") {
-            comparatorRef.current.remove(event.ctrlKey);
-            setActually(comparatorRef.current.getTypedSentence());
+            comparatorRef.current?.remove(event.ctrlKey);
+            setActually(comparatorRef.current?.getTypedSentence());
         }
     }
 
-    return {expected, actually, handleKeydown};
-}
+    const handleReload = async () => {
+        refetch();
+    }
 
-export default useDictionaryComparator;
+    useEffect(() => {
+        if (words) {
+            comparatorRef.current = new DictionaryComparator(words, 10);
+            setExpected(comparatorRef.current?.getReferenceSentence());
+            setActually(comparatorRef.current?.getTypedSentence());
+        }
+    }, [words])
+
+    return { expected, actually, handleKeydown, handleReload }
+}

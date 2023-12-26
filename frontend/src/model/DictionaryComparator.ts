@@ -77,15 +77,12 @@ export default class DictionaryComparator {
     }
 
     private canRemove(): boolean {
-        return !(this.focusIndex === 0 && this.getFocusedWord() === "") &&
-            this.focusIndex < this.reference.length;
+        return !(this.focusIndex === 0 && this.getFocusedWord() === "") && this.focusIndex < this.reference.length;
     }
 
     private removeEntireWord(): void {
         // If possible, move the focus to the previous word
-        if (this.canMoveToPrevWord()) {
-            this.focusIndex--;
-        }
+        if (this.canMoveToPrevWord()) { this.focusIndex--; }
         // Clear the current word
         this.comparand[this.focusIndex] = "";
     }

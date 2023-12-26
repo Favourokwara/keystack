@@ -14,7 +14,7 @@ const WordsWrapper = ({expected, actually, handleFocus, isFocus = true}: {expect
 
         let x = currentFocus?.offsetLeft || 0;
         let y = currentFocus?.
-                parentElement?.offsetTop || 0;
+                parentElement?.offsetTop || 4;
 
         if (currentFocus?.classList.contains("word")) {
             x += currentFocus.offsetWidth;
@@ -35,11 +35,15 @@ const WordsWrapper = ({expected, actually, handleFocus, isFocus = true}: {expect
         }
     }, [])
 
+    useEffect(() => {
+        getPosition()
+    }, [x, y])
+
     return (
         <>
-            <div id="wordsWrapper" onClick={handleFocus} >
+            <div id="wordsWrapper" className='max-w-[800px] max-h-[74px] border-white overflow-hidden'  onClick={handleFocus} >
                 {isFocus && <div id="caret" style={{transform: `translateX(${x}px)`}} />}
-                <Words reference={expected} expected={actually} ref={cursorRef} blurred={!isFocus} />
+                {Boolean(expected) && <Words reference={expected} expected={actually} ref={cursorRef} blurred={!isFocus} yDisplacement={y * -1} />}
             </div>
         </>
     )
