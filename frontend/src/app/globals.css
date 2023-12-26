@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -18,17 +25,14 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer components {
   #words {
-    @apply inline-flex text-xl transition-all;
+    @apply inline-flex text-xl flex-wrap transition-all;
     /* transition: all 0.25s ease 0s; */
   }
 
@@ -39,7 +43,7 @@ body {
 
   .correct {
     /* rgb(250, 250, 250) */
-    @apply text-gray-50 ;
+    @apply text-gray-50;
   }
 
   .blurred {
@@ -59,7 +63,7 @@ body {
   }
 
   #caret {
-    @apply absolute h-7 w-0.5 bg-red-400 top-1;
+    @apply absolute h-7 w-0.5 bg-red-400 transition-transform duration-75 ease-linear;
     animation: blink 1.5s linear 2s infinite;
   }
 
@@ -72,7 +76,13 @@ body {
   }
 
   @keyframes blink {
-    0%, 100% {opacity: 1;}
-    50% {opacity: 0;}
+
+    0%,100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
   }
 }
