@@ -50,6 +50,38 @@ body {
     @apply blur-sm opacity-25 transition-all delay-1000;
   }
 
+  .outOfFocusWarning{
+    @apply mx-auto h-0 leading-[76px];
+    animation: smoothAppear 1.8s linear none;
+  }
+
+  #result {
+    display: grid;
+    gap: 2rem;
+    grid-template-areas:
+    "stats     chart    " 
+    "morestats morestats";
+      grid-template-columns: auto 1fr;
+  }
+
+  .stats {
+    grid-area: stats;
+    grid-template-areas:
+    "wpm"
+    "acc";
+  }
+
+  .chart {
+    grid-area: chart;
+    height: 200px;
+    max-height: 200px;
+    width: 100%;
+  }
+
+  .outOfFocusWarning.hidden{
+    display: none;
+  }
+
   .incorrect {
     @apply text-red-300;
   }
@@ -84,5 +116,10 @@ body {
     50% {
       opacity: 0;
     }
+  }
+
+  @keyframes smoothAppear {
+    0%, 50% { opacity: 0; }
+    100% { opacity: 1; }
   }
 }

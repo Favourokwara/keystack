@@ -37,11 +37,11 @@ const WordsWrapper = ({expected, actually, handleFocus, isFocus = true}: {expect
 
     useEffect(() => {
         getPosition()
-    }, [x, y])
+    }, [x, y, actually])
 
     return (
         <>
-            <div id="wordsWrapper" className='max-w-[800px] max-h-[74px] border-white overflow-hidden'  onClick={handleFocus} >
+            <div id="wordsWrapper" className='max-w-[800px] h-[76px] border-white overflow-hidden'  onClick={handleFocus} >
                 {isFocus && <div id="caret" style={{transform: `translateX(${x}px)`}} />}
                 {Boolean(expected) && <Words reference={expected} expected={actually} ref={cursorRef} blurred={!isFocus} yDisplacement={y * -1} />}
             </div>

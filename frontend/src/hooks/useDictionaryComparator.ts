@@ -18,7 +18,7 @@ export default function useDictionaryComparator() {
             refetchOnReconnect: false,
             refetchOnWindowFocus: false,
             onSuccess: wordsList => {
-                setWords(sampleSize(wordsList, 300));
+                setWords(sampleSize(wordsList, 10));
             }
         }
     );

@@ -5,7 +5,6 @@ import WordsWrapper from './WordsWrapper';
 import { trpc } from '@/app/api/trpc/[trpc]/_trpc/client';
 
 const TypingTest = () => {
-    
 
     const { expected, actually, handleKeydown, handleReload } = useDictionaryComparator();
 
@@ -25,10 +24,14 @@ const TypingTest = () => {
     }, [])
 
     return (
-        <div id="typingTest">
+        <div id="typingTest" className='flex flex-col'>
+            {!isFocused && <div className={`outOfFocusWarning ${isFocused? 'hidden':''}`} >Click here or start typing to focus</div>}
             <input id="wordsInput" type="text" onFocus={onFocus} onBlur={onBlur} onKeyDown={handleKeydown} ref={inputRef} />
             <WordsWrapper expected={expected ??[]} actually={actually??[]} isFocus={isFocused} handleFocus={handleFocus} />
-            <button type="button" className='p-4' onClick={handleReload} ></button>
+            <button type="button" className='p-4 mx-auto mt-4' onClick={() =>{
+                handleReload();
+                handleFocus();
+            }} >Reset</button>
         </div>
     )
 }
