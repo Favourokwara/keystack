@@ -7,7 +7,7 @@ interface LetterProps {
 }
 
 const Word = forwardRef<HTMLDivElement, LetterProps>(
-	({ reference, expected }, focusRef) => {
+	({ reference, expected = "" }, focusRef) => {
 		const cls = ["word"];
 
 		const isFocused = Boolean(focusRef);

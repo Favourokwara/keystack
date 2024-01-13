@@ -1,17 +1,16 @@
-import { count, generate } from 'random-words';
-import { publicProcedure, router } from './trpc';
-import { z } from 'zod';
+import { generate } from "random-words";
+import { z } from "zod";
+
+import { publicProcedure, router } from "./trpc";
 
 export const appRouter = router({
-  getTodos: publicProcedure
-    .query(async () => {
-      return [10, 20, 30];
-    }),
-  getWords: publicProcedure
-    .input(z.object({ language: z.string(), limit: z.number().optional() }))
-    .query(async (opt) => {
-      const { language, limit = 300 } = opt.input;
-      return generate({ minLength: 1, exactly: limit });
+    getWords: publicProcedure.input(z.object(
+        {
+            language: z.string().default("english"),
+            limit: z.number().lt(250).default(120)
+        }
+    )).query(({ input }) => {
+        return generate({ exactly: input.limit, min: 26 });
     })
 });
 

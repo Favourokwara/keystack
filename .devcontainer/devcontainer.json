@@ -10,7 +10,8 @@
 				"vivaxy.vscode-conventional-commits",
 				"christian-kohler.path-intellisense",
 				"bradlc.vscode-tailwindcss",
-				"formulahendry.code-runner"
+				"formulahendry.code-runner",
+				"esbenp.prettier-vscode"
 			]
 		}
 	},
