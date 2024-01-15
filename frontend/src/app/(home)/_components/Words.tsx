@@ -1,4 +1,5 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
+
 import Word from "./Word";
 
 interface Props {

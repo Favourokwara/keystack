@@ -1,5 +1,6 @@
-import { trpc } from "@/app/_trpc/client";
 import { KeyboardEvent, useEffect, useState } from "react";
+
+import { trpc } from "@/app/_trpc/client";
 
 
 /**
@@ -8,7 +9,7 @@ import { KeyboardEvent, useEffect, useState } from "react";
  * 
  * @param tolerance The allowed tolerance in character count for each word.
  */
-export default function useComparator(tolerance: number = 10) {
+export default function useComparator(tolerance = 10) {
 
     // stores the reference word list and expected words state.
     const [reference, setReference] = useState<string[]>(["the", "quick", "brown", "fox"]);
@@ -16,14 +17,6 @@ export default function useComparator(tolerance: number = 10) {
 
     // stores the index of the word being focused on.
     const [focusIndex, setFocusIndex] = useState<number>(0);
-
-    // const reloadComparator = async () => {
-    //     const { data, isError } = await trpc.getWords.useQuery({ limit: 10 });
-
-    //     setFocusIndex(0);
-    //     setReference(data || [""]);
-    //     setExpected((data || [""]).map(() => ""))
-    // }
 
     const getFocusWord = (): string => { return expected[focusIndex]; }
 
@@ -106,6 +99,16 @@ export default function useComparator(tolerance: number = 10) {
         }
     }
 
+    useEffect(() => {
+        fetch("http://localhost:3000/api/v1/words?limit=10&min=7")
+            .then(res => res.json())
+            .then((res: string[]) => {
+                setReference(res);
+                setExpected([""]);
+            });
+    }, []);
 
-    return { reference, expected, focusIndex, handleKeydown };
+    return {
+        reference, expected, focusIndex, handleKeydown
+    };
 }

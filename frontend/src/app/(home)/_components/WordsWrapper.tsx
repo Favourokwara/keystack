@@ -1,6 +1,7 @@
 import { MouseEventHandler, useEffect } from "react";
-import Words from "./Words";
+
 import useCursorPosition from "../_hooks/useCursorPosition";
+import Words from "./Words";
 
 interface WrapperProps {
 	expected: string[];

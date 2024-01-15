@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
+
 import Letter from "./Letter";
 
 interface LetterProps {
-	reference: string;
 	expected: string;
+	reference: string;
 }
 
 const Word = forwardRef<HTMLDivElement, LetterProps>(

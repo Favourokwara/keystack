@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 interface Props {
 	className?: string;

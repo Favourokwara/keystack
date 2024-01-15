@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import WordsWrapper from "./WordsWrapper";
 import useComparator from "../_hooks/useComparator";
 import RestartButton from "./RestartButton";
+import WordsWrapper from "./WordsWrapper";
 
 export default function TypingTest() {
 	const { reference, expected, focusIndex, handleKeydown } = useComparator(10);

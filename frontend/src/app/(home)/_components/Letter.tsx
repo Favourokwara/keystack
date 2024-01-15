@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 interface LetterProps {
 	expected: string;
@@ -12,7 +12,7 @@ const Letter = forwardRef<HTMLDivElement, LetterProps>(
 		// mark letter correct or incorrect depending on whether it was attempted
 		if (expected) cls.push(expected === reference ? "correct" : "incorrect");
 
-		// mark the letter as an extra if it has no reference.
+		// mark the letter as an extra if it has no reference
 		if (!reference) cls.push("extra");
 
 		return (
