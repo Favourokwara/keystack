@@ -1,8 +1,11 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 
 import { getWordList } from "./load";
 
 const app = new Hono();
+
+app.use("/api/v1/*", cors())
 
 app
   .basePath("/api/v1")
@@ -23,5 +26,3 @@ app
   );
 
 export default app;
-
-// localhost:3000/api/v1/words?lang=english&limit=5&min=3&max=7
